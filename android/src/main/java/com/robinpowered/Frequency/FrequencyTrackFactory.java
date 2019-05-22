@@ -20,10 +20,9 @@ class FrequencyTrackFactory {
     public static AudioTrack create(double frequency, double duration) {
         AudioTrack track;
 
-        final int dur = (int) duration;
-        final int numOfSamples = dur * SAMPLE_RATE;
+        final int numOfSamples =  (int)(duration * SAMPLE_RATE);
 
-        final byte soundData[] = createSoundData(frequency, numOfSamples);        
+        final byte soundData[] = createSoundData(frequency, numOfSamples);
 
         // create audio track - methods used differ based on OS version
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -32,7 +31,7 @@ class FrequencyTrackFactory {
         } else {
             track = new AudioTrack.Builder()
                     .setAudioFormat(new AudioFormat.Builder()
-                            .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                            .setEncoding(AudioFormat.ENCODING_PCM_8BIT)
                             .setSampleRate(SAMPLE_RATE)
                             .setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
                     .setBufferSizeInBytes(numOfSamples).build();
